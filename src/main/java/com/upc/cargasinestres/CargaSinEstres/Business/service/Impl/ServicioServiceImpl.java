@@ -51,4 +51,13 @@ public class ServicioServiceImpl implements IServicioService {
                 .map(servicio -> modelMapper.map(servicio, ServicioResponseDto.class))
                 .toList();
     }
+
+    @Override
+    public List<ServicioResponseDto> getAllServicesByIds(List<Long> servicioIds){
+        var servicios = servicioRepository.findAllById(servicioIds);
+
+        return servicios.stream()
+                .map(servicio -> modelMapper.map(servicio, ServicioResponseDto.class))
+                .toList();
+    }
 }

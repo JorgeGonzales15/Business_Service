@@ -11,4 +11,6 @@ public interface IServicioService {
 
     //get services
     public abstract List<ServicioResponseDto> getAllServices();
+
+    public abstract List<ServicioResponseDto> getAllServicesByIds(List<Long> servicioIds);
 }

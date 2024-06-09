@@ -39,4 +39,11 @@ public class ServicioController {
         var res = serviceService.getAllServices();
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+    @Operation(summary = "Get all services by Ids")
+    @GetMapping("/services/{ids}")
+    public ResponseEntity<List<ServicioResponseDto>> getAllServicesByIds(@PathVariable List<Long> ids) {
+        var res = serviceService.getAllServicesByIds(ids);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }
