@@ -6,9 +6,12 @@ import com.upc.cargasinestres.CargaSinEstres.Business.model.dto.Rating.response.
 import com.upc.cargasinestres.CargaSinEstres.Business.model.entity.Rating;
 import com.upc.cargasinestres.CargaSinEstres.Business.repository.IRatingRepository;
 import com.upc.cargasinestres.CargaSinEstres.Business.service.IRatingService;
+import com.upc.cargasinestres.CargaSinEstres.Shared.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Qualifier("ratingServiceImpl")
@@ -38,4 +41,17 @@ public class RatingServiceImpl implements IRatingService {
         return modelMapper.map(createdRating, RatingResponseDto.class);
     }
 
+    @Override
+    public List<RatingResponseDto> getRatingsByCompanyId(Long companyId) {
+        var existingRating = ratingRepository.findByCompanyId(companyId);
+        if (existingRating.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontro ratings de la empresa con id: " + companyId);
+        }
+
+        var toShowRatings = existingRating.stream()
+                .map(Rating -> modelMapper.map(Rating, RatingResponseDto.class))
+                .toList();
+
+        return toShowRatings;
+    }
 }

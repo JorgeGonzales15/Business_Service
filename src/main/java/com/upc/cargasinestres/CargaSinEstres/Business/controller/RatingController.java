@@ -25,4 +25,10 @@ public class RatingController {
         var res = ratingService.createRating(idCompany, ratingRequestDto);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
+
+    @GetMapping("/ratings/company/{idCompany}")
+    public ResponseEntity<?> getRatingsByCompanyId(@PathVariable Long idCompany){
+        var res = ratingService.getRatingsByCompanyId(idCompany);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }
